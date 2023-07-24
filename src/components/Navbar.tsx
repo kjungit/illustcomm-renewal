@@ -10,6 +10,8 @@ import NewFillIcon from "./ui/icons/NewFillIcon";
 import { usePathname } from "next/navigation";
 import ColorButton from "./ui/ColorButton";
 import Image from "next/image";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Avatar from "./Avatar";
 
 const menu = [
   { href: "/", icon: <HomeIcon />, clickedIcon: <HomeFillIcon /> },
@@ -19,6 +21,8 @@ const menu = [
 
 export default function Navbar() {
   const pathName = usePathname();
+  const { data: session } = useSession();
+  const user = session?.user;
   return (
     <div className="flex items-center justify-between px-6">
       <Link href="/">
@@ -27,6 +31,7 @@ export default function Navbar() {
           alt="logo"
           width={200}
           height={50}
+          priority={true}
         />
       </Link>
       <nav>
@@ -39,8 +44,19 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+          {user && (
+            <li>
+              <Link href={`/user/${user.username}`}>
+                <Avatar image={user.image} />
+              </Link>
+            </li>
+          )}
           <li>
-            <ColorButton text="Sign in" onClick={() => {}} />
+            {session ? (
+              <ColorButton text="Sign out" onClick={() => signOut()} />
+            ) : (
+              <ColorButton text="Sign in" onClick={() => signIn()} />
+            )}
           </li>
         </ul>
       </nav>
