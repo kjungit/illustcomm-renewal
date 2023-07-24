@@ -72,7 +72,6 @@ export default {
     select: {
       title: 'name',
       subtitle: 'username',
-      media: 'profile',
     },
   },
 }
