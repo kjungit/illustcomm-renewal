@@ -15,7 +15,6 @@ const BACKGROUND = [
 ];
 
 export default function SignIn({ providers, callbackUrl }: Props) {
-  console.log(providers);
   return (
     <ul className="flex flex-col gap-4">
       {Object.values(providers).map(({ id, name }, index) => {
