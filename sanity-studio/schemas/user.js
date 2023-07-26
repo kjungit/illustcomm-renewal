@@ -19,9 +19,9 @@ export default {
       type: 'string',
     },
     {
-      title: 'Profile',
-      name: 'profile',
-      type: 'image',
+      title: 'Image',
+      name: 'image',
+      type: 'string',
     },
     {
       title: 'Following',
