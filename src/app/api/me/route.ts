@@ -1,5 +1,5 @@
 import { authOptions } from "@/lib/auth";
-import { getUserByUserName } from "@/service/user";
+import { getUserByUsername } from "@/service/user";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     return new Response("Authentication Error", { status: 401 });
   }
 
-  return getUserByUserName(user.username).then((data) =>
+  return getUserByUsername(user.username).then((data) =>
     NextResponse.json(data)
   );
 }
