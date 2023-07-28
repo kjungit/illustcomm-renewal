@@ -1,14 +1,14 @@
 import React from "react";
-
+type AvatorSize = "xsmall" | "small" | "medium" | "large";
 type Props = {
   image?: string | null;
-  size?: "small" | "normal";
+  size?: AvatorSize;
   highlight?: boolean;
 };
 
 export default function Avatar({
   image,
-  size = "normal",
+  size = "large",
   highlight = false,
 }: Props) {
   return (
@@ -26,18 +26,37 @@ export default function Avatar({
   );
 }
 
-function getContainerStyle(size: string, highlight: boolean): string {
+function getContainerStyle(size: AvatorSize, highlight: boolean): string {
   const baseStryle = "rounded-full flex justify-center items-center";
   const highlightStyle = highlight
-    ? "bg-gradient-to-bl from-gray-600 via-gray-300 to-gray-100"
+    ? "bg-gradient-to-bl from-gray-600 via-gray-300 to-gray-100 dark:from-gray-100 dark:via-gray-300 dark:to-gray-600"
     : "";
-  const sizeStyle = size === "small" ? "w-10 h-10" : "w-[68px] h-[68px]";
+  const sizeStyle = getContainerSize(size);
 
   return `${baseStryle} ${highlightStyle} ${sizeStyle}`;
 }
 
-function getImageSizeStyle(size: string): string {
-  return size === "small"
-    ? "w-[34px] h-[34px] p-[0.1rem]"
-    : "w-16 h-16 p-[0.2rem]";
+function getContainerSize(size: AvatorSize): string {
+  switch (size) {
+    case "xsmall":
+      return "w-6 h-6";
+    case "small":
+      return "w-10 h-10";
+    case "medium":
+      return "w-11 h-11";
+    case "large":
+      return "w-[68px] h-[68px]";
+  }
+}
+function getImageSizeStyle(size: AvatorSize): string {
+  switch (size) {
+    case "xsmall":
+      return "w-6 h-6 p-[0.1rem]";
+    case "small":
+      return "w-[34px] h-[34px] p-[0.1rem]";
+    case "medium":
+      return "w-[42px] h-[42x] p-[0.1rem]";
+    case "large":
+      return "w-16 h-16 p-[0.2rem]";
+  }
 }
