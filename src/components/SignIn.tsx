@@ -10,7 +10,11 @@ type Props = {
 
 const BACKGROUND = [
   { bg: "bg-[#fff]", border: "border-gray-600", text: "text-gray-800" },
-  { bg: "bg-[#FCDC3F]", border: "border-[#FCDC3F]", text: "text-gray-800" },
+  {
+    bg: "bg-[#FCDC3F]",
+    border: "border-[#FCDC3F]",
+    text: "text-gray-800",
+  },
   { bg: "bg-[#02C73A]", border: "border-[#02C73A]", text: "text-white" },
 ];
 
