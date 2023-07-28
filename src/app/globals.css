@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.my-masonry-grid {
+  display: flex;
+  width: auto;
+  gap: 20px;
+}
+
+.my-masonry-grid-column {
+  background-clip: padding-box;
+}
+
+.my-masonry-grid-column > li {
+  margin-bottom: 20px;
+  list-style: none;
+}
