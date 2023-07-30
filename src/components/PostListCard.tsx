@@ -1,11 +1,17 @@
+"use client";
+
 import { SimplePost } from "@/model/post";
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "./Avatar";
 import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import CommentForm from "./CommentForm";
 import CardInfoBar from "./CardInfoBar";
+import ModalPortal from "./ui/ModalPortal";
+import PostModal from "./ui/PostModal";
+import PostDetail from "./PostDetail";
+import PostUserAvatar from "./PostUserAvatar";
 type Props = {
   post: SimplePost;
   priority?: boolean;
@@ -13,14 +19,12 @@ type Props = {
 
 export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image, createdAt, likes, text } = post;
+  const [openModal, setOpenModal] = useState(false);
   const { data: session } = useSession();
   const user = session?.user;
   return (
     <article className="border border-gray-200 rounded-lg shadow-md">
-      <div className="flex items-center p-2">
-        <Avatar image={userImage} size="medium" highlight />
-        <span className="ml-2 font-bold">{username}</span>
-      </div>
+      <PostUserAvatar username={username} image={userImage} />
       <Image
         className="object-cover w-full"
         src={image}
@@ -28,6 +32,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         width={400}
         height={500}
         priority={priority}
+        onClick={() => setOpenModal(true)}
       />
       <CardInfoBar
         likes={likes}
@@ -36,7 +41,13 @@ export default function PostListCard({ post, priority = false }: Props) {
         createdAt={createdAt}
         myProfile={user?.image}
       />
-      <CommentForm />
+      {openModal && (
+        <ModalPortal>
+          <PostModal onClose={() => setOpenModal(false)}>
+            <PostDetail post={post} />
+          </PostModal>
+        </ModalPortal>
+      )}
     </article>
   );
 }
