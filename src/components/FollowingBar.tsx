@@ -17,7 +17,7 @@ export default function FollowingBar() {
   ];
 
   return (
-    <section className="flex items-center justify-center w-full  p-4 mb-4 rounded-lg shadow-sm overflow-x-auto shadow-neutral-300 min-h-[120px]">
+    <section className="flex items-center justify-center w-full  p-4 mb-4 rounded-lg shadow-sm overflow-x-auto shadow-neutral-300 min-h-[120px] relative z-0">
       {isLoading ? (
         <SyncLoader size={8} color="gray" />
       ) : (
