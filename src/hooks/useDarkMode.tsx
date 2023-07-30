@@ -8,20 +8,23 @@ export default function useDarkMode(): [
 ] {
   const [theme, setTheme] = useState<Theme>(
     typeof window !== "undefined"
-      ? localStorage.getItem("theme")
-        ? (localStorage.getItem("theme") as "light" | "dark")
-        : "light"
+      ? (localStorage.getItem("theme") as Theme) || "light"
       : "light"
   );
-  const currentTheme = theme === "dark" ? "light" : "dark";
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove(currentTheme);
-    root.classList.add(theme);
+    root.classList.remove("dark");
+    root.classList.remove("light");
+
+    if (theme === "light") {
+      root.classList.add("light");
+    } else {
+      root.classList.add("dark");
+    }
 
     localStorage.setItem("theme", theme);
-  }, [theme, currentTheme]);
+  }, [theme]);
 
-  return [currentTheme, setTheme];
+  return [theme, setTheme];
 }
