@@ -1,6 +1,7 @@
 "use client";
+
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeIcon from "./ui/icons/HomeIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import SearchIcon from "./ui/icons/SearchIcon";
@@ -15,6 +16,8 @@ import Avatar from "./Avatar";
 import useDarkMode from "@/hooks/useDarkMode";
 import DarkModeIcon from "./ui/icons/DarkModeIcon";
 import LightModeIcon from "./ui/icons/LightModeIcon";
+import BlockLogo from "./ui/BlackLogo";
+import WhiteLogo from "./ui/WhiteLogo";
 
 const menu = [
   { href: "/", icon: <HomeIcon />, clickedIcon: <HomeFillIcon /> },
@@ -23,41 +26,23 @@ const menu = [
 ];
 
 export default function Navbar() {
-  const [currentTheme, setTheme] = useDarkMode();
+  const [theme, setTheme] = useDarkMode();
   const darkModeHandler = () => {
-    if (currentTheme === "light") {
-      setTheme("light");
-      document.body.setAttribute("data-theme", "light");
-    } else {
+    if (theme === "light") {
       setTheme("dark");
       document.body.setAttribute("data-theme", "dark");
+    } else {
+      setTheme("light");
+      document.body.setAttribute("data-theme", "light");
     }
   };
-
   const pathName = usePathname();
   const { data: session } = useSession();
   const user = session?.user;
+
   return (
     <div className="flex items-center justify-between px-6 dark:bg-black dark:text-white">
-      <Link href="/">
-        {currentTheme === "light" ? (
-          <Image
-            src="/assets/illust-logo-white.png"
-            alt="logo"
-            width={200}
-            height={50}
-            priority={true}
-          />
-        ) : (
-          <Image
-            src="/assets/illust-logo-black.png"
-            alt="logo"
-            width={200}
-            height={50}
-            priority={true}
-          />
-        )}
-      </Link>
+      <Link href="/">{theme === "dark" ? <WhiteLogo /> : <BlockLogo />}</Link>
       <nav>
         <ul className="flex items-center gap-4 p-4">
           {menu.map((item) => (
@@ -82,7 +67,7 @@ export default function Navbar() {
             )}
           </li>
           <button onClick={darkModeHandler}>
-            {currentTheme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
+            {theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
           </button>
         </ul>
       </nav>
