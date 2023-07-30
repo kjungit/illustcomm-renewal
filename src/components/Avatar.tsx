@@ -51,7 +51,7 @@ function getContainerSize(size: AvatorSize): string {
 function getImageSizeStyle(size: AvatorSize): string {
   switch (size) {
     case "xsmall":
-      return "w-6 h-6 p-[0.1rem]";
+      return "w-6 h-6 p-[0.5rem]";
     case "small":
       return "w-[34px] h-[34px] p-[0.1rem]";
     case "medium":
