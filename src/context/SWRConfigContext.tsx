@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function SWRConfigSontext({ children }: Props) {
+export default function SWRConfigContext({ children }: Props) {
   return (
     <SWRConfig
       value={{
