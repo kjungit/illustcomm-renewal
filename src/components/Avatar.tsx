@@ -1,5 +1,5 @@
 import React from "react";
-type AvatorSize = "xsmall" | "small" | "medium" | "large";
+type AvatorSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 type Props = {
   image?: string | null;
   size?: AvatorSize;
@@ -15,9 +15,8 @@ export default function Avatar({
     <div className={getContainerStyle(size, highlight)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className={`w-10 h-10 object-cover rounded-full p-[0.15rem] bg-white ${getImageSizeStyle(
-          size
-        )}`}
+        className={`w-10 h-10 object-cover rounded-full p-[0.15rem] bg-white 
+        ${getImageSizeStyle(size).image}`}
         src={image ?? undefined}
         alt="profile"
         referrerPolicy="no-referrer"
@@ -31,32 +30,44 @@ function getContainerStyle(size: AvatorSize, highlight: boolean): string {
   const highlightStyle = highlight
     ? "bg-gradient-to-bl from-gray-600 via-gray-300 to-gray-100 dark:from-gray-100 dark:via-gray-300 dark:to-gray-600"
     : "";
-  const sizeStyle = getContainerSize(size);
+  const { container } = getImageSizeStyle(size);
 
-  return `${baseStryle} ${highlightStyle} ${sizeStyle}`;
+  return `${baseStryle} ${highlightStyle} ${container}`;
 }
 
-function getContainerSize(size: AvatorSize): string {
+type ImageSizeStyle = {
+  container: string;
+  image: string;
+};
+
+function getImageSizeStyle(size: AvatorSize): ImageSizeStyle {
   switch (size) {
     case "xsmall":
-      return "w-6 h-6";
+      return {
+        container: "w-7 h-7",
+        image: "w-[24px] h-[24px] p-[0.1rem]",
+      };
     case "small":
-      return "w-10 h-10";
+      return {
+        container: "w-9 h-9",
+        image: "w-[34px] h-[34px] p-[0.1rem]",
+      };
     case "medium":
-      return "w-11 h-11";
+      return {
+        container: "w-11 h-11",
+        image: "w-[42px] h-[42x] p-[0.1rem]",
+      };
     case "large":
-      return "w-[68px] h-[68px]";
-  }
-}
-function getImageSizeStyle(size: AvatorSize): string {
-  switch (size) {
-    case "xsmall":
-      return "w-6 h-6 p-[0.5rem]";
-    case "small":
-      return "w-[34px] h-[34px] p-[0.1rem]";
-    case "medium":
-      return "w-[42px] h-[42x] p-[0.1rem]";
-    case "large":
-      return "w-16 h-16 p-[0.2rem]";
+      return {
+        container: "w-[68px] h-[68px]",
+        image: "w-16 h-16 p-[0.2rem] p-[0.2rem]",
+      };
+    case "xlarge":
+      return {
+        container: "w-[132px] h-[132px]",
+        image: "w-[128px] h-[128px] p-[0.3rem]",
+      };
+    default:
+      throw new Error(`Unsupported type sizeL ${size}`);
   }
 }
