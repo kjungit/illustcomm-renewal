@@ -7,6 +7,7 @@ export default function BlockLogo() {
       alt="logo"
       width={200}
       height={50}
+      loading="eager"
       priority={true}
     />
   );

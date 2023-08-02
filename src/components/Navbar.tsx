@@ -26,23 +26,30 @@ const menu = [
 ];
 
 export default function Navbar() {
+  const [isMounted, setIsMounted] = useState(false);
   const [theme, setTheme] = useDarkMode();
   const darkModeHandler = () => {
     if (theme === "light") {
       setTheme("dark");
-      document.body.setAttribute("data-theme", "dark");
     } else {
       setTheme("light");
-      document.body.setAttribute("data-theme", "light");
     }
   };
   const pathName = usePathname();
   const { data: session } = useSession();
   const user = session?.user;
 
+  useEffect(() => {
+    if (isMounted) return;
+    setIsMounted(true);
+  }, []);
+
   return (
     <div className="flex items-center justify-between px-6 dark:bg-black dark:text-white">
-      <Link href="/">{theme === "dark" ? <WhiteLogo /> : <BlockLogo />}</Link>
+      <Link href="/">
+        {isMounted && theme === "light" ? <BlockLogo /> : <WhiteLogo />}
+      </Link>
+
       <nav>
         <ul className="flex items-center gap-4 p-4">
           {menu.map((item) => (
@@ -67,7 +74,7 @@ export default function Navbar() {
             )}
           </li>
           <button onClick={darkModeHandler}>
-            {theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
+            <LightModeIcon />
           </button>
         </ul>
       </nav>

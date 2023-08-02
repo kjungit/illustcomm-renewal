@@ -14,14 +14,11 @@ export default function useDarkMode(): [
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("dark");
-    root.classList.remove("light");
+    root.classList.add(theme);
 
-    if (theme === "light") {
-      root.classList.add("light");
-    } else {
-      root.classList.add("dark");
-    }
+    theme === "light"
+      ? root.classList.remove("dark")
+      : root.classList.remove("light");
 
     localStorage.setItem("theme", theme);
   }, [theme]);
