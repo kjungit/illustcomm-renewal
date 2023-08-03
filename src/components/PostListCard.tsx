@@ -34,13 +34,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         priority={priority}
         onClick={() => setOpenModal(true)}
       />
-      <CardInfoBar
-        likes={likes}
-        username={username}
-        text={text}
-        createdAt={createdAt}
-        myProfile={user?.image}
-      />
+      <CardInfoBar post={post} myProfile={user?.image} />
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
