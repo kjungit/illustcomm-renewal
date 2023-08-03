@@ -4,6 +4,12 @@ import { authOptions } from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import { getProviders } from "next-auth/react";
 import SignIn from "@/components/SignIn";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "로그인",
+  description: "소셜 로그인을 해주세요.",
+};
 
 type Props = {
   searchParams: {
