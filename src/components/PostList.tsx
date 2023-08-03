@@ -1,10 +1,10 @@
 "use client";
-import { SimplePost } from "@/model/post";
+
 import React from "react";
-import useSWR from "swr";
 import PostListCard from "./PostListCard";
 import Masonry from "react-masonry-css";
 import BeatSpinner from "./ui/BeatSpinner";
+import usePosts from "@/hooks/usePost";
 
 const breakpointBlogPostColumnsObj = {
   default: 2,
@@ -12,7 +12,7 @@ const breakpointBlogPostColumnsObj = {
 };
 
 export default function PostList() {
-  const { data: posts, isLoading } = useSWR<SimplePost[]>("/api/posts");
+  const { posts, isLoading } = usePosts();
   return (
     <section>
       {isLoading && (
