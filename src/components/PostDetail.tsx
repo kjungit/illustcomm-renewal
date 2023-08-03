@@ -14,7 +14,6 @@ export default function PostDetail({ post }: Props) {
   const { id, userImage, username, image, createdAt, likes } = post;
   const { data } = userSWR<FullPost>(`/api/posts/${id}`);
   const comments = data?.comments;
-  console.log(comments);
   return (
     <section className="flex flex-col w-full h-full overflow-y-auto md:flex md:flex-row">
       <div className="relative basis-1/2">
@@ -47,7 +46,7 @@ export default function PostDetail({ post }: Props) {
               )
             )}
         </ul>
-        <CardInfoBar likes={likes} username={username} createdAt={createdAt} />
+        <CardInfoBar post={post} />
       </div>
     </section>
   );
