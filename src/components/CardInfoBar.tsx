@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function CardInfoBar({ post, myProfile }: Props) {
-  const { id, likes, username, text, createdAt } = post;
+  const { likes, username, text, createdAt } = post;
   const { data: session } = useSession();
   const user = session?.user;
   const liked = user ? likes.includes(user.username) : false;
