@@ -1,19 +1,20 @@
-import { FullPost, SimplePost } from "@/model/post";
+import { SimplePost } from "@/model/post";
 import Image from "next/image";
 import React from "react";
-import userSWR from "swr";
 import PostUserAvatar from "./PostUserAvatar";
 import CardInfoBar from "./CardInfoBar";
 import Avatar from "./Avatar";
+import usePost from "@/hooks/usePost";
 
 type Props = {
   post: SimplePost;
 };
 
 export default function PostDetail({ post }: Props) {
-  const { id, userImage, username, image, createdAt, likes } = post;
-  const { data } = userSWR<FullPost>(`/api/posts/${id}`);
+  const { id, userImage, username, image } = post;
+  const { post: data, postComment } = usePost(id);
   const comments = data?.comments;
+
   return (
     <section className="flex flex-col w-full h-full overflow-y-auto md:flex md:flex-row">
       <div className="relative basis-1/2">
@@ -46,7 +47,7 @@ export default function PostDetail({ post }: Props) {
               )
             )}
         </ul>
-        <CardInfoBar post={post} />
+        <CardInfoBar post={post} onComment={postComment} />
       </div>
     </section>
   );
