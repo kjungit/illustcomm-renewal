@@ -5,17 +5,18 @@ import CommentForm from "./CommentForm";
 import ToggleButton from "./ui/ToggleButton";
 import HeartFillIcon from "./ui/icons/HeartFillIcon";
 import BookmarkFillIcon from "./ui/icons/BookmarkFillIcon";
-import { SimplePost } from "@/model/post";
-import usePosts from "@/hooks/usePost";
+import { Comment, SimplePost } from "@/model/post";
+import usePosts from "@/hooks/usePosts";
 import useMe from "@/hooks/useMe";
 
 type Props = {
   post: SimplePost;
-  myProfile?: string | undefined;
+  children?: React.ReactNode;
+  onComment: (comment: Comment) => void;
 };
 
-export default function CardInfoBar({ post, myProfile }: Props) {
-  const { id, likes, username, text, createdAt } = post;
+export default function CardInfoBar({ post, children, onComment }: Props) {
+  const { id, likes, createdAt } = post;
   const { user, setBookmark } = useMe();
   const { setLike } = usePosts();
 
@@ -28,6 +29,10 @@ export default function CardInfoBar({ post, myProfile }: Props) {
 
   const handleBookmark = (bookmark: boolean) => {
     user && setBookmark(id, bookmark);
+  };
+
+  const handleComment = (comment: string) => {
+    user && onComment({ comment, username: user.username, image: user.image });
   };
 
   return (
@@ -50,15 +55,10 @@ export default function CardInfoBar({ post, myProfile }: Props) {
         <p className="font-bold">{`${likes?.length ?? 0} ${
           likes?.length > 1 ? "likes" : "like"
         }`}</p>
-        {text && (
-          <div className="flex text-sm">
-            <span className="font-bold">{username}</span>
-            <p className="ml-2">{text}</p>
-          </div>
-        )}
+        {children}
         <p className="my-2 text-xs font-medium">{parseDate(createdAt)}</p>
-        {myProfile && <CommentForm image={myProfile} />}
       </div>
+      <CommentForm onPostComment={handleComment} image={user?.image} />
     </>
   );
 }
