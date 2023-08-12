@@ -4,7 +4,7 @@ import React from "react";
 import PostListCard from "./PostListCard";
 import Masonry from "react-masonry-css";
 import BeatSpinner from "./ui/BeatSpinner";
-import usePosts from "@/hooks/usePost";
+import usePosts from "@/hooks/usePosts";
 
 const breakpointBlogPostColumnsObj = {
   default: 2,
