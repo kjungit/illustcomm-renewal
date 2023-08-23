@@ -17,7 +17,7 @@ export default function Button({
     <button
       className={`${
         color ? "bg-blue-600" : "bg-black dark:text-black dark:bg-white"
-      } p-2 font-bold leading-4 text-white  border-none rounded-md ${
+      } p-2 font-bold leading-4 text-white  border-none rounded-md w-full h-full ${
         disabled && "opacity-60"
       }`}
       onClick={() => onClick()}
