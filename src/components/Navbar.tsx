@@ -10,19 +10,32 @@ import NewIcon from "./ui/icons/NewIcon";
 import NewFillIcon from "./ui/icons/NewFillIcon";
 import { usePathname } from "next/navigation";
 import ColorButton from "./ui/ColorButton";
-import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Avatar from "./Avatar";
 import useDarkMode from "@/hooks/useDarkMode";
-import DarkModeIcon from "./ui/icons/DarkModeIcon";
 import LightModeIcon from "./ui/icons/LightModeIcon";
 import BlockLogo from "./ui/BlackLogo";
 import WhiteLogo from "./ui/WhiteLogo";
 
 const menu = [
-  { href: "/", icon: <HomeIcon />, clickedIcon: <HomeFillIcon /> },
-  { href: "/search", icon: <SearchIcon />, clickedIcon: <SearchFillIcon /> },
-  { href: "/new", icon: <NewIcon />, clickedIcon: <NewFillIcon /> },
+  {
+    href: "/",
+    icon: <HomeIcon />,
+    clickedIcon: <HomeFillIcon />,
+    title: "Home",
+  },
+  {
+    href: "/search",
+    icon: <SearchIcon />,
+    clickedIcon: <SearchFillIcon />,
+    title: "Search users",
+  },
+  {
+    href: "/new",
+    icon: <NewIcon />,
+    clickedIcon: <NewFillIcon />,
+    title: "New Post",
+  },
 ];
 
 export default function Navbar() {
@@ -46,14 +59,14 @@ export default function Navbar() {
 
   return (
     <div className="flex items-center justify-between px-6 dark:bg-black dark:text-white">
-      <Link href="/">
+      <Link href="/" aria-label="Home">
         {isMounted && theme === "light" ? <BlockLogo /> : <WhiteLogo />}
       </Link>
 
       <nav>
         <ul className="flex items-center gap-4 p-4">
           {menu.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} aria-label={item.title}>
               <Link href={item.href}>
                 {pathName === item.href ? item.clickedIcon : item.icon}
               </Link>
