@@ -46,13 +46,12 @@ export async function getPostsOf(username: string) {
   return client
     .fetch(
       `*[_type == "post" && author->username == "${username}"]
-    | order(_createdAt desc){
-      ${simplePostProjection}
-    }`
+      | order(_createdAt desc){
+        ${simplePostProjection}
+      }`
     )
-    .then((posts) => mapPosts(posts));
+    .then(mapPosts);
 }
-
 export async function getLikedPostOf(username: string) {
   return client
     .fetch(
@@ -125,8 +124,6 @@ export async function addComment(
 }
 
 export async function createPost(userId: string, text: string, file: Blob) {
-  console.log(userId, text, file);
-
   return fetch(assetsURL, {
     method: "POST",
     headers: {
@@ -153,4 +150,37 @@ export async function createPost(userId: string, text: string, file: Blob) {
         { autoGenerateArrayKeys: true }
       );
     });
+}
+
+export async function updatePost(
+  userId: string,
+  postId: string,
+  newText: string,
+  newFile: Blob
+) {
+  const result = await fetch(assetsURL, {
+    method: "POST",
+    headers: {
+      "content-type": newFile.type,
+      authorization: `Bearer ${process.env.SANITY_SECRET_TOKEN}`,
+    },
+    body: newFile,
+  }).then((res) => res.json());
+
+  return client
+    .patch(postId)
+    .set({
+      comments: [
+        {
+          comment: newText,
+          author: { _ref: userId, _type: "reference" },
+        },
+      ],
+      photo: { asset: { _ref: result.document._id } },
+    })
+    .commit();
+}
+
+export async function deletePost(postId: string) {
+  return client.delete(postId);
 }
