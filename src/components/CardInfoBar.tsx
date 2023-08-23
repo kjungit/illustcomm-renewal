@@ -43,12 +43,14 @@ export default function CardInfoBar({ post, children, onComment }: Props) {
           onToggle={handleLike}
           onIcon={<HeartFillIcon />}
           offIcon={<HeartIcon />}
+          title={liked ? "unlike" : "like"}
         />
         <ToggleButton
           toggled={bookmarked}
           onToggle={handleBookmark}
           onIcon={<BookmarkFillIcon />}
           offIcon={<BookmarkIcon />}
+          title={bookmarked ? "unbookmark" : "bookmark"}
         />
       </div>
       <div className="px-4 pb-4">
