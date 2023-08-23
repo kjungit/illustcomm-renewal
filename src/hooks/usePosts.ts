@@ -17,6 +17,12 @@ async function addComment(id: string, comment: string) {
   }).then((res) => res.json());
 }
 
+async function deletePost(id: string) {
+  return fetch(`/api/posts/${id}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+}
+
 export default function usePosts() {
   const cacheKeys = useCacheKeys();
   const {
@@ -25,6 +31,21 @@ export default function usePosts() {
     error,
     mutate,
   } = useSWR<SimplePost[]>(cacheKeys.postsKey);
+
+  const deletePostCallback = useCallback(
+    async (id: string) => {
+      // Optimistically update the cache.
+      const newPosts = posts?.filter((post) => post.id !== id);
+
+      return mutate(deletePost(id), {
+        optimisticData: newPosts,
+        populateCache: false,
+        revalidate: false,
+        rollbackOnError: true,
+      });
+    },
+    [posts, mutate]
+  );
 
   const setLike = useCallback(
     (post: SimplePost, username: string, like: boolean) => {
@@ -69,5 +90,5 @@ export default function usePosts() {
     },
     [posts, mutate]
   );
-  return { posts, isLoading, error, setLike, postComment };
+  return { posts, isLoading, error, setLike, postComment, deletePostCallback };
 }
