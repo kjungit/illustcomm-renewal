@@ -26,9 +26,9 @@ export default function NewPost({ user: { username, image } }: Props) {
     const files = e.target?.files;
     if (files && files[0]) {
       setFile(files[0]);
-      console.log(files[0]);
     }
   };
+
   const handleDrag = (e: DragEvent) => {
     if (e.type === "dragenter") {
       setDragging(true);
@@ -47,7 +47,6 @@ export default function NewPost({ user: { username, image } }: Props) {
     const files = e.dataTransfer?.files;
     if (files && files[0]) {
       setFile(files[0]);
-      console.log(files[0]);
     }
   };
 
@@ -85,56 +84,60 @@ export default function NewPost({ user: { username, image } }: Props) {
         </p>
       )}
       <PostUserAvatar username={username} image={image ?? ""} />
-      <form className="flex flex-col w-full mt-2" onSubmit={handleSubmit}>
-        <input
-          className="hidden"
-          type="file"
-          accept="image/*"
-          name="input"
-          id="input-upload"
-          onChange={handleChange}
-        />
-        <label
-          className={`flex flex-col items-center justify-center w-full h-96 ${
-            !file && "border-2 border-dashed"
-          }`}
-          htmlFor="input-upload"
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          {dragging && (
-            <div className="absolute inset-0 z-10 pointer-events-none bg-sky-500/30" />
-          )}
-          {!file && (
-            <div>
-              <FileIcon />
-              <p>여기에 이미지 Drag & Drop 하기</p>
-            </div>
-          )}
-          {file && (
-            <div className="relative w-full h-full">
-              <Image
-                className="object-contain"
-                src={URL.createObjectURL(file)}
-                alt="localfile"
-                fill
-                sizes="650px"
-              />
-            </div>
-          )}
-        </label>
-        <textarea
-          className="border outline-none texg-lg border-neutral-300"
-          name="text"
-          id="input-text"
-          required
-          rows={10}
-          placeholder={"작품 문구를 작성해주세요."}
-          ref={textRef}
-        />
-        <Button text="등록하기" onClick={() => {}} />
+      <form className="flex w-full mt-2 " onSubmit={handleSubmit}>
+        <div>
+          <input
+            className="hidden"
+            type="file"
+            accept="image/*"
+            name="input"
+            id="input-upload"
+            onChange={handleChange}
+          />
+          <label
+            className={`flex flex-col items-center justify-center w-[400px] h-96 ${
+              !file && "border-2 border-dashed"
+            }`}
+            htmlFor="input-upload"
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            {dragging && (
+              <div className="absolute inset-0 z-10 pointer-events-none bg-sky-500/30" />
+            )}
+            {!file && (
+              <div>
+                <FileIcon />
+                <p>여기에 이미지 Drag & Drop 하기</p>
+              </div>
+            )}
+            {file && (
+              <div className="relative w-full h-full">
+                <Image
+                  className="object-contain"
+                  src={URL.createObjectURL(file)}
+                  alt="localfile"
+                  fill
+                  sizes="650px"
+                />
+              </div>
+            )}
+          </label>
+        </div>
+        <div className="flex flex-col justify-between w-full">
+          <textarea
+            className="w-[400px] h-full border p-3 outline-none texg-lg border-neutral-300"
+            name="text"
+            id="input-text"
+            required
+            rows={10}
+            placeholder={"작품 문구를 작성해주세요."}
+            ref={textRef}
+          />
+          <Button text="등록하기" onClick={() => {}} />
+        </div>
       </form>
     </section>
   );
