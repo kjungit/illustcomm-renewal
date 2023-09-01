@@ -13,9 +13,15 @@ type Props = {
   post: SimplePost;
   children?: React.ReactNode;
   onComment: (comment: Comment) => void;
+  isComment?: boolean;
 };
 
-export default function CardInfoBar({ post, children, onComment }: Props) {
+export default function CardInfoBar({
+  post,
+  children,
+  onComment,
+  isComment = true,
+}: Props) {
   const { id, likes, createdAt } = post;
   const { user, setBookmark } = useMe();
   const { setLike } = usePosts();
@@ -60,7 +66,9 @@ export default function CardInfoBar({ post, children, onComment }: Props) {
         {children}
         <p className="my-2 text-xs font-medium">{parseDate(createdAt)}</p>
       </div>
-      <CommentForm onPostComment={handleComment} image={user?.image} />
+      {isComment && (
+        <CommentForm onPostComment={handleComment} image={user?.image} />
+      )}
     </>
   );
 }
