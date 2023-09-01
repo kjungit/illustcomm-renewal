@@ -84,8 +84,11 @@ export default function NewPost({ user: { username, image } }: Props) {
         </p>
       )}
       <PostUserAvatar username={username} image={image ?? ""} />
-      <form className="flex w-full mt-2 " onSubmit={handleSubmit}>
-        <div>
+      <form
+        className="flex flex-col items-center justify-center w-full mt-2 md:items-center md:flex-row"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex items-center justify-center">
           <input
             className="hidden"
             type="file"
@@ -95,7 +98,7 @@ export default function NewPost({ user: { username, image } }: Props) {
             onChange={handleChange}
           />
           <label
-            className={`flex flex-col items-center justify-center w-[400px] h-96 ${
+            className={`flex flex-col items-center justify-center w-[400px] h-[400px] ${
               !file && "border-2 border-dashed"
             }`}
             htmlFor="input-upload"
@@ -108,9 +111,9 @@ export default function NewPost({ user: { username, image } }: Props) {
               <div className="absolute inset-0 z-10 pointer-events-none bg-sky-500/30" />
             )}
             {!file && (
-              <div>
+              <div className="flex flex-col items-center">
                 <FileIcon />
-                <p>여기에 이미지 Drag & Drop 하기</p>
+                <p className="mt-2 font-bold">여기에 이미지 Drag & Drop 하기</p>
               </div>
             )}
             {file && (
@@ -126,7 +129,7 @@ export default function NewPost({ user: { username, image } }: Props) {
             )}
           </label>
         </div>
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex flex-col items-center justify-between w-[400px] h-[400px] md:justify-center">
           <textarea
             className="w-[400px] h-full border p-3 outline-none texg-lg border-neutral-300"
             name="text"
@@ -136,7 +139,9 @@ export default function NewPost({ user: { username, image } }: Props) {
             placeholder={"작품 문구를 작성해주세요."}
             ref={textRef}
           />
-          <Button text="등록하기" onClick={() => {}} />
+          <div className="w-full h-20">
+            <Button text="등록하기" onClick={() => {}} />
+          </div>
         </div>
       </form>
     </section>

@@ -88,10 +88,10 @@ export default function EditPost({ user: { username, image }, id }: Props) {
       )}
       <PostUserAvatar username={username} image={image ?? ""} />
       <form
-        className="flex flex-col justify-center w-full mt-2 md:items-center md:flex-row"
+        className="flex flex-col items-center justify-center w-full mt-2 md:items-center md:flex-row"
         onSubmit={handleSubmit}
       >
-        <div className="flex justify-center">
+        <div className="flex items-center justify-center">
           <input
             className="hidden"
             type="file"
@@ -101,7 +101,7 @@ export default function EditPost({ user: { username, image }, id }: Props) {
             onChange={handleChange}
           />
           <label
-            className={`flex flex-col items-center justify-center w-[400px] h-96 ${
+            className={`flex flex-col items-center justify-center w-[400px] h-[400px] ${
               !file && "border-2 border-dashed"
             }`}
             htmlFor="input-upload"
@@ -137,7 +137,7 @@ export default function EditPost({ user: { username, image }, id }: Props) {
             )}
           </label>
         </div>
-        <div className="flex flex-col items-center justify-between w-full h-full md:justify-center">
+        <div className="flex flex-col items-center justify-between w-[400px] h-[400px] md:justify-center">
           <textarea
             className="w-[400px] h-full border p-3 outline-none texg-lg border-neutral-300"
             name="text"
@@ -147,7 +147,7 @@ export default function EditPost({ user: { username, image }, id }: Props) {
             ref={textRef}
             placeholder={placeholder}
           />
-          <div className="w-full h-[50px]">
+          <div className="w-full h-20">
             <Button text="등록하기" onClick={() => {}} />
           </div>
         </div>
