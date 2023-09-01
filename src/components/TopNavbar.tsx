@@ -17,7 +17,7 @@ import LightModeIcon from "./ui/icons/LightModeIcon";
 import BlockLogo from "./ui/BlackLogo";
 import WhiteLogo from "./ui/WhiteLogo";
 
-const menu = [
+export const menu = [
   {
     href: "/",
     icon: <HomeIcon />,
@@ -38,9 +38,10 @@ const menu = [
   },
 ];
 
-export default function Navbar() {
+export default function TopNavbar() {
   const [isMounted, setIsMounted] = useState(false);
   const [theme, setTheme] = useDarkMode();
+
   const darkModeHandler = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -58,13 +59,12 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between px-6 dark:bg-black dark:text-white">
-      <Link href="/" aria-label="Home">
+    <div className="flex items-center h-[60px] justify-between px-6 dark:bg-black dark:text-white">
+      <Link href="/" aria-label="Home" className="min-w-[200px]">
         {isMounted && theme === "light" ? <BlockLogo /> : <WhiteLogo />}
       </Link>
-
-      <nav>
-        <ul className="flex items-center gap-4 p-4">
+      <nav className="hidden md:block">
+        <ul className="flex items-center gap-8 p-4">
           {menu.map((item) => (
             <li key={item.href} aria-label={item.title}>
               <Link href={item.href}>
@@ -72,25 +72,26 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
-          {user && (
-            <li>
-              <Link href={`/user/${user.username}`}>
-                <Avatar image={user.image} size="small" highlight />
-              </Link>
-            </li>
-          )}
-          <li>
-            {session ? (
-              <ColorButton text="Sign out" onClick={() => signOut()} />
-            ) : (
-              <ColorButton text="Sign in" onClick={() => signIn()} />
-            )}
-          </li>
-          <button onClick={darkModeHandler}>
-            <LightModeIcon />
-          </button>
         </ul>
       </nav>
+
+      <div className="flex gap-4">
+        {session ? (
+          <ColorButton text="logout" onClick={() => signOut()} />
+        ) : (
+          <ColorButton text="login" onClick={() => signIn()} />
+        )}
+        {user && (
+          <li>
+            <Link href={`/user/${user.username}`}>
+              <Avatar image={user.image} size="small" highlight />
+            </Link>
+          </li>
+        )}
+        <button onClick={darkModeHandler}>
+          <LightModeIcon />
+        </button>
+      </div>
     </div>
   );
 }
