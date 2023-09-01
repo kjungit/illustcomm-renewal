@@ -34,7 +34,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         priority={priority}
         onClick={() => setOpenModal(true)}
       />
-      <CardInfoBar post={post} onComment={handlePostComment}>
+      <CardInfoBar post={post} onComment={handlePostComment} isComment={false}>
         <div className="flex text-sm">
           <span className="font-bold">{username}</span>
           <p className="ml-2">{text}</p>
