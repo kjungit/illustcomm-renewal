@@ -18,7 +18,7 @@ export default function UserSearch() {
   const onsubmit = (e: FormEvent) => {
     e.preventDefault();
   };
-  console.log(users);
+
   return (
     <section className="flex flex-col items-center justify-center w-full px-4">
       <form onSubmit={onsubmit} className="w-full max-w-2xl my-4">
